@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_small_label_design,product_small_label_design,model_product_small_label_design,base.group_user,1,1,1,1
+access_aces_design_field_line,aces_design_field_line,model_aces_design_field_line,base.group_user,1,1,1,1
+access_wizard_product_small_label_report,access.wizard.product.small.label.report,model_wizard_product_small_label_report,base.group_user,1,1,1,1
+access_product_small_label_qty,access.product.small.label.qty,model_product_small_label_qty,base.group_user,1,1,1,1
+access_aces_product_field_line,access.aces.product.field.line,model_aces_product_field_line,base.group_user,1,1,1,1
+

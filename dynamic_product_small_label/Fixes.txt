@@ -1,0 +1,31 @@
+10-01-2020
+1. Assigned Dynamic Product Label Wizard Buttons/Fields/Pagess to Inventory manager as following:
+	Buttons:
+	--------
+	Save Design Button
+
+	Fields:
+	--------
+	Update Existing Template Field
+	Design Using
+	Currency
+	Currency Position	
+
+	Pages:
+	--------
+	Label
+	Barcode
+	Fields
+	Barcode Print Help
+
+2. Added Font Weight, Border, Align Fileds in Fields Selections.
+
+14-09-2019
+Menu moved from sales to Inventory/Configurations.
+
+26-04-2019
+Fixed Price decimal issue.
+Added UOM field in fields selection.
+
+
+

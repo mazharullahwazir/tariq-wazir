@@ -9,7 +9,8 @@
             <field name="arch" type="xml">
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='operations']/tree[1]/field[@name='product_id']" position="attributes">
                       <attribute name="domain">["|",["categ_id.complete_name","ilike","Parts"],["categ_id.complete_name","ilike","Repairs"]]</attribute>
-                   </xpath> 
+                   </xpath>
+
                    
             </field>
         </record>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="prod_small_lbl_rpt">
+            <t t-call="web.html_container">
+                <t t-as="product_dict" t-foreach="get_barcode_data(data)">
+                    <t t-set="product" t-value="list(product_dict.keys())[0]" />
+                    <t t-foreach="doc_ids" t-as="doc_id">
+                        <t t-call="web.basic_layout">
+                            <div class="page">
+                                <div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="product.name" />
+                                    </div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="product.default_code" />
+                                    </div>
+                                    <t t-if="data['form']['with_barcode'] and data['form']['barcode_field'] and data['form']['barcode_type']">
+                                        <t t-if="get_barcode_string(product, data['form']['barcode_field'], data['form']['barcode_type'], data)">
+                                            <div style="color:black;margin-top:15px;font-size:9px;">
+                                                <t t-set="style" t-value="get_style(data)" />
+<!--                                                <img-->
+<!--                                                    t-att-src="'data:image/png;base64,%s' % to_text(get_barcode_string(product, data['form']['barcode_field'], data['form']['barcode_type'], data))"-->
+<!--                                                    t-att-style="style" />-->
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-esc="get_price(product, doc_id.pricelist_id)" t-options='{"widget": "monetary", "display_currency": product.currency_id}' />
+                                    </div>
+                                    <t t-if="data['form']['label_logo']">
+                                        <div align="center" style="color:black;font-size:12px;">
+<!--                                            <img t-att-src="'data:image/png;base64,%s' % to_text(data['form']['label_logo'])" style="max-height: 50px;max-width: 50px;" />-->
+                                        </div>
+                                    </t>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="print_product_attributes(product, product_dict_value, data)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

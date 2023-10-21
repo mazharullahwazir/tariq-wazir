@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="template_design_1" model="product.small.label.design">
+            <field name="name">Default Design</field>
+            <field name="report_model">wizard.product.small.label.report</field>
+            <field name="template_label_design"><![CDATA[<?xml version="1.0"?>
+            <t t-name="dynamic_product_small_label.prod_small_lbl_rpt">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-as="product_dict" t-foreach="get_barcode_data(data)">
+                    <t t-set="product" t-value="list(product_dict.keys())[0]" />
+                        <t t-call="web.basic_layout">
+                            <div align="center" class="page">
+                                <div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="product.name" />
+                                    </div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="product.default_code" />
+                                    </div>
+                                    <t t-if="data['form']['with_barcode'] and data['form']['barcode_field'] and data['form']['barcode_type']">
+                                        <t t-if="get_barcode_string(product, data['form']['barcode_field'], data['form']['barcode_type'], data)">
+                                            <div style="color:black;margin-top:15px;font-size:9px;">
+                                                <t t-set="style" t-value="get_style(data)" />
+                                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', 'jhgjh', 600, 100)"/>
+                                                            <div t-esc="line.product_id.barcode"
+                                                     t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:35px;margin-top:-50px;'}"/>
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-esc="get_price(product, doc_id.pricelist_id)"
+                                            t-options='{"widget": "monetary", "display_currency": product.currency_id}' />
+                                    </div>
+                                    <t t-if="data['form']['label_logo']">
+                                        <div align="center" style="color:black;font-size:12px;">
+<!--                                            <img t-att-src="'data:image/png;base64,%s' % to_text(data['form']['label_logo'])"-->
+<!--                                                style="max-height: 50px;max-width: 50px;" />-->
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>]]>
+            </field>
+            <field name="label_width">43</field>
+            <field name="label_height">30</field>
+            <field name="dpi">80</field>
+            <field name="margin_top">4</field>
+            <field name="margin_left">1</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_right">1</field>
+            <field name="with_barcode">True</field>
+            <field name="barcode_height">300</field>
+            <field name="barcode_width">1500</field>
+            <field name="humanReadable">True</field>
+            <field name="display_height">40</field>
+            <field name="display_width">200</field>
+        </record>
+
+        <record id="template_design_2" model="product.small.label.design">
+            <field name="name">Sale OrderDefault Design</field>
+            <field name="report_model">sale.order</field>
+            <field name="template_label_design"><![CDATA[<?xml version="1.0"?>
+            <t t-name="dynamic_product_small_label.prod_small_lbl_rpt">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-as="line_dict" t-foreach="get_barcode_data(data)">
+                    <t t-set="line" t-value="list(line_dict.keys())[0]" />
+                        <t t-call="web.basic_layout">
+                            <div align="center" class="page">
+                                <div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="line.product_id.name" />
+                                    </div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="line.product_id.default_code" />
+                                    </div>
+                                    <t t-if="data['form']['with_barcode'] and data['form']['barcode_field'] and data['form']['barcode_type']">
+                                        <t t-if="get_barcode_string(line.product_id, data['form']['barcode_field'], data['form']['barcode_type'], data)">
+                                            <div style="color:black;margin-top:15px;font-size:9px;">
+                                                <t t-set="style" t-value="get_style(data)" />
+
+                                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', 'jhgjh', 600, 100)"/>
+                                                            <div t-esc="line.product_id.barcode"
+                                                     t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:35px;margin-top:-50px;'}"/>
+
+
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-esc="get_price(line.product_id, doc_id.pricelist_id)"
+                                            t-options='{"widget": "monetary", "display_currency": line.product_id.currency_id}' />
+                                    </div>
+                                    <t t-if="data['form']['label_logo']">
+                                        <div align="center" style="color:black;font-size:12px;">
+<!--                                            <img t-att-src="'data:image/png;base64,%s' % to_text(data['form']['label_logo'])"-->
+<!--                                                style="max-height: 50px;max-width: 50px;" />-->
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>]]>
+            </field>
+            <field name="label_width">43</field>
+            <field name="label_height">30</field>
+            <field name="dpi">80</field>
+            <field name="margin_top">4</field>
+            <field name="margin_left">1</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_right">1</field>
+            <field name="with_barcode">True</field>
+            <field name="barcode_height">300</field>
+            <field name="barcode_width">1500</field>
+            <field name="humanReadable">True</field>
+            <field name="display_height">40</field>
+            <field name="display_width">200</field>
+        </record>
+
+        <record id="template_design_3" model="product.small.label.design">
+            <field name="name">Purchase Order Default Design</field>
+            <field name="report_model">purchase.order</field>
+            <field name="template_label_design"><![CDATA[<?xml version="1.0"?>
+            <t t-name="dynamic_product_small_label.prod_small_lbl_rpt">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-as="line_dict" t-foreach="get_barcode_data(data)">
+                    <t t-set="line" t-value="list(line_dict.keys())[0]" />
+                        <t t-call="web.basic_layout">
+                            <div align="center" class="page">
+                                <div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="line.product_id.name" />
+                                    </div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="line.product_id.default_code" />
+                                    </div>
+                                    <t t-if="data['form']['with_barcode'] and data['form']['barcode_field'] and data['form']['barcode_type']">
+                                        <t t-if="get_barcode_string(line.product_id, data['form']['barcode_field'], data['form']['barcode_type'], data)">
+                                            <div style="color:black;margin-top:15px;font-size:9px;">
+                                                <t t-set="style" t-value="get_style(data)" />
+
+                                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', 'jhgjh', 600, 100)"
+                                        />
+                                                            <div t-esc="line.product_id.barcode"
+                                                     t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:35px;margin-top:-50px;'}"/>
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-esc="get_price(line.product_id, doc_id.pricelist_id)"
+                                            t-options='{"widget": "monetary", "display_currency": line.product_id.currency_id}' />
+                                    </div>
+                                    <t t-if="data['form']['label_logo']">
+                                        <div align="center" style="color:black;font-size:12px;">
+<!--                                            <img t-att-src="'data:image/png;base64,%s' % to_text(data['form']['label_logo'])"-->
+<!--                                                style="max-height: 50px;max-width: 50px;" />-->
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>]]>
+            </field>
+            <field name="label_width">43</field>
+            <field name="label_height">30</field>
+            <field name="dpi">80</field>
+            <field name="margin_top">4</field>
+            <field name="margin_left">1</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_right">1</field>
+            <field name="with_barcode">True</field>
+            <field name="barcode_height">300</field>
+            <field name="barcode_width">1500</field>
+            <field name="humanReadable">True</field>
+            <field name="display_height">40</field>
+            <field name="display_width">200</field>
+        </record>
+
+        <record id="template_design_4" model="product.small.label.design">
+            <field name="name">Account Invoice Default Design</field>
+            <field name="report_model">account.invoice</field>
+            <field name="template_label_design"><![CDATA[<?xml version="1.0"?>
+            <t t-name="dynamic_product_small_label.prod_small_lbl_rpt">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-as="line_dict" t-foreach="get_barcode_data(data)">
+                    <t t-set="line" t-value="list(line_dict.keys())[0]" />
+                        <t t-call="web.basic_layout">
+                            <div align="center" class="page">
+                                <div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="line.product_id.name" />
+                                    </div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="line.product_id.default_code" />
+                                    </div>
+                                    <t t-if="data['form']['with_barcode'] and data['form']['barcode_field'] and data['form']['barcode_type']">
+                                        <t t-if="get_barcode_string(line.product_id, data['form']['barcode_field'], data['form']['barcode_type'], data)">
+                                            <div style="color:black;margin-top:15px;font-size:9px;">
+                                                <t t-set="style" t-value="get_style(data)" />
+
+                                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', 'jhgjh', 600, 100)"
+                                        />
+                                                            <div t-esc="line.product_id.barcode"
+                                                     t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:35px;margin-top:-50px;'}"/>
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-esc="get_price(line.product_id, doc_id.pricelist_id)"
+                                            t-options='{"widget": "monetary", "display_currency": line.product_id.currency_id}' />
+                                    </div>
+                                    <t t-if="data['form']['label_logo']">
+                                        <div align="center" style="color:black;font-size:12px;">
+<!--                                            <img t-att-src="'data:image/png;base64,%s' % to_text(data['form']['label_logo'])"-->
+<!--                                                style="max-height: 50px;max-width: 50px;" />-->
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>]]>
+            </field>
+            <field name="label_width">43</field>
+            <field name="label_height">30</field>
+            <field name="dpi">80</field>
+            <field name="margin_top">4</field>
+            <field name="margin_left">1</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_right">1</field>
+            <field name="with_barcode">True</field>
+            <field name="barcode_height">300</field>
+            <field name="barcode_width">1500</field>
+            <field name="humanReadable">True</field>
+            <field name="display_height">40</field>
+            <field name="display_width">200</field>
+        </record>
+
+        <record id="template_design_5" model="product.small.label.design">
+            <field name="name">Stock Picking Default Design</field>
+            <field name="report_model">stock.picking</field>
+            <field name="template_label_design"><![CDATA[<?xml version="1.0"?>
+            <t t-name="dynamic_product_small_label.prod_small_lbl_rpt">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                <t t-as="line_dict" t-foreach="get_barcode_data(data)">
+                    <t t-set="line" t-value="list(line_dict.keys())[0]" />
+                    <t t-call="web.basic_layout">
+                        <div align="center" class="page">
+                            <div>
+                                <div align="center" style="color:black;font-size:12px;">
+                                    <span t-field="line.product_id.name" />
+                                </div>
+                                <div align="center" style="color:black;font-size:12px;">
+                                    <span t-field="line.product_id.default_code" />
+                                </div>
+                                <t t-if="data['form']['with_barcode'] and data['form']['barcode_field'] and data['form']['barcode_type']">
+                                    <t t-if="get_barcode_string(line.product_id, data['form']['barcode_field'], data['form']['barcode_type'], data)">
+                                        <div style="color:black;margin-top:15px;font-size:9px;">
+                                            <t t-set="style" t-value="get_style(data)" />
+
+                                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', 'jhgjh', 600, 100)"
+                                        />
+                                                            <div t-esc="line.product_id.barcode"
+                                                     t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:35px;margin-top:-50px;'}"/>
+                                        </div>
+                                    </t>
+                                </t>
+                                <div align="center" style="color:black;font-size:12px;">
+                                    <span t-esc="get_price(line.product_id, doc_id.pricelist_id)"
+                                        t-options='{"widget": "monetary", "display_currency": line.product_id.currency_id}' />
+                                </div>
+                                <t t-if="data['form']['label_logo']">
+                                    <div align="center" style="color:black;font-size:12px;">
+<!--                                        <img t-att-src="'data:image/png;base64,%s' % to_text(data['form']['label_logo'])"-->
+<!--                                            style="max-height: 50px;max-width: 50px;" />-->
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+                </t>
+            </t>]]>
+            </field>
+            <field name="label_width">43</field>
+            <field name="label_height">30</field>
+            <field name="dpi">80</field>
+            <field name="margin_top">4</field>
+            <field name="margin_left">1</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_right">1</field>
+            <field name="with_barcode">True</field>
+            <field name="barcode_height">300</field>
+            <field name="barcode_width">1500</field>
+            <field name="humanReadable">True</field>
+            <field name="display_height">40</field>
+            <field name="display_width">200</field>
+        </record>
+
+        <record id="template_design_6" model="product.small.label.design">
+            <field name="name">Product Product Default Design</field>
+            <field name="report_model">product.product</field>
+            <field name="template_label_design"><![CDATA[<?xml version="1.0"?>
+            <t t-name="dynamic_product_small_label.prod_small_lbl_rpt">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-as="product_dict" t-foreach="get_barcode_data(data)">
+                    <t t-set="product" t-value="list(product_dict.keys())[0]" />
+                        <t t-call="web.basic_layout">
+                            <div align="center" class="page">
+                                <div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="product.name" />
+                                    </div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="product.default_code" />
+                                    </div>
+                                    <t t-if="data['form']['with_barcode'] and data['form']['barcode_field'] and data['form']['barcode_type']">
+                                        <t t-if="get_barcode_string(product, data['form']['barcode_field'], data['form']['barcode_type'], data)">
+                                            <div style="color:black;margin-top:15px;font-size:9px;">
+                                                <t t-set="style" t-value="get_style(data)" />
+
+                                               <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', 'jhgjh', 600, 100)"
+                                        />
+                                                            <div t-esc="product.barcode"
+                                                     t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:35px;margin-top:-50px;'}"/>
+
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                    <t-raw t-model="product.pricelist_id"
+                                                t-widget="monetary"
+                                                t-display-currency="product.currency_id" />
+                                        <t>
+        Price: <span t-esc="get_price(product, pricelist_id)"
+                    t-options='{"widget": "monetary", "display_currency": product.currency_id}' />
+    </t>
+                                    </div>
+                                    <t t-if="data['form']['label_logo']">
+                                        <div align="center" style="color:black;font-size:12px;">
+<!--                                            <img t-att-src="'data:image/png;base64,%s' % to_text(data['form']['label_logo'])"-->
+<!--                                                style="max-height: 50px;max-width: 50px;" />-->
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>]]>
+            </field>
+            <field name="label_width">43</field>
+            <field name="label_height">30</field>
+            <field name="dpi">80</field>
+            <field name="margin_top">4</field>
+            <field name="margin_left">1</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_right">1</field>
+            <field name="with_barcode">True</field>
+            <field name="barcode_height">300</field>
+            <field name="barcode_width">1500</field>
+            <field name="humanReadable">True</field>
+            <field name="display_height">40</field>
+            <field name="display_width">200</field>
+        </record>
+
+        <record id="template_design_7" model="product.small.label.design">
+            <field name="name">Lots/Serial Numbers Default Design</field>
+            <field name="report_model">stock.production.lot</field>
+            <field name="template_label_design"><![CDATA[<?xml version="1.0"?>
+            <t t-name="dynamic_product_small_label.prod_small_lbl_rpt">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-as="line_dict" t-foreach="get_barcode_data(data)">
+                    <t t-set="line" t-value="list(line_dict.keys())[0]" />
+                        <t t-call="web.basic_layout">
+                            <div align="center" class="page">
+                                <div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="line.product_id.name" />
+                                    </div>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-field="line.product_id.default_code" />
+                                    </div>
+                                    <t t-if="data['form']['with_barcode'] and data['form']['barcode_field'] and data['form']['barcode_type']">
+                                        <t t-if="get_barcode_string(line.product_id, data['form']['barcode_field'], data['form']['barcode_type'], data)">
+                                            <div style="color:black;margin-top:15px;font-size:9px;">
+                                                <t t-set="style" t-value="get_style(data)" />
+
+                                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', 'jhgjh', 600, 100)"
+                                        />
+                                                            <div t-esc="line.product_id.barcode"
+                                                     t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:35px;margin-top:-50px;'}"/>
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <div align="center" style="color:black;font-size:12px;">
+                                        <span t-esc="get_price(line.product_id, doc_id.pricelist_id)"
+                                            t-options='{"widget": "monetary", "display_currency": line.product_id.currency_id}' />
+                                    </div>
+                                    <t t-if="data['form']['label_logo']">
+                                        <div align="center" style="color:black;font-size:12px;">
+<!--                                            <img t-att-src="'data:image/png;base64,%s' % to_text(data['form']['label_logo'])"-->
+<!--                                                style="max-height: 50px;max-width: 50px;" />-->
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>]]>
+            </field>
+            <field name="label_width">43</field>
+            <field name="label_height">30</field>
+            <field name="dpi">80</field>
+            <field name="margin_top">4</field>
+            <field name="margin_left">1</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_right">1</field>
+            <field name="with_barcode">True</field>
+            <field name="barcode_height">300</field>
+            <field name="barcode_width">1500</field>
+            <field name="humanReadable">True</field>
+            <field name="display_height">40</field>
+            <field name="display_width">200</field>
+        </record>
+    </data>
+</odoo>
